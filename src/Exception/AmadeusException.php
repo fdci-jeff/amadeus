@@ -1,6 +1,6 @@
 <?php
 
-namespace Jeff\Exception\Exception;
+namespace Jeff\Amadeus\Exception;
 
 class AmadeusException extends \Exception
 {

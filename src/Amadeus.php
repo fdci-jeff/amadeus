@@ -1,5 +1,7 @@
 <?php
 
+namespace Jeff\Amadeus;
+
 use Illuminate\Support\Facades\Config;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Client;
