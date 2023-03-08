@@ -29,9 +29,7 @@ class AmadeusServiceProvider extends ServiceProvider
         }
 
         $this->app->singleton('amadeus', function () {
-            return new Amadeus;
+            return new Jeff\Amadeus\Amadeus();
         });
-        
-        return $this->app->make('amadeus');
     }
 }
