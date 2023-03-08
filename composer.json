@@ -17,12 +17,5 @@
     "minimum-stability": "dev",
     "require": {
         "guzzlehttp/guzzle": "^7.5@dev"
-    },
-    "extra": {
-        "laravel": {
-            "providers": [
-                "Jeff\\Amadeus\\AmadeusProvider"
-            ]
-        }
     }
 }
