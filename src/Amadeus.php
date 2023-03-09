@@ -50,18 +50,18 @@ class Amadeus {
     public function url()
     {
         if($this->sandbox) {
-            $this->base_url = $this->$test_link;
+            $this->base_url = $this->test_link;
         }
 
         return $this->base_url;
     }
 
-    public static function getAccessToken()
+    public function getAccessToken()
     {
         self::createAccessToken();
     }
 
-    public static function createAccessToken()
+    public function createAccessToken()
     {
         $url = self::url() . "v1/security/oauth2/token";
 
