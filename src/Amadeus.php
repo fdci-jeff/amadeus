@@ -8,86 +8,113 @@ use GuzzleHttp\Client;
 
 class Amadeus {
 
-    protected $client_id;
+    protected $clientId;
 
-	protected $client_secret;
+	protected $clientSecret;
 
-	protected $grant_type;
+	protected $grantType;
 
 	protected $sandbox;
 
-	protected $test_link;
+	protected $testLink;
 
-	protected $live_link;
+	protected $liveLink;
 
 	protected $timeout;
 
-	protected $RETURNTRANSFER;
+	protected $returnTransfer;
 
     protected $token = null;
 
     public function __construct()
     {
-        $this->client_id      	= Config::get('amadeus', 'client_id');
-		$this->client_secret    = Config::get('amadeus', 'client_secret');
-		$this->grant_type    	= Config::get('amadeus', 'grant_type');
-	 	$this->sandbox 			= Config::get('amadeus', 'sandbox');
-	 	$this->test_link    	= Config::get('amadeus', 'test_link');
-	 	$this->live_link     	= Config::get('amadeus', 'live_link');
-	 	$this->timeout     		= Config::get('amadeus', 'timeout');
-		$this->RETURNTRANSFER   = Config::get('amadeus', 'RETURNTRANSFER');
-		
-        $this->base_url = $this->live_link;
-
+        $this->setClientID(Config::get('amadeus', 'client_id'));
+        $this->setClientSecret(Config::get('amadeus', 'client_secret'));
+        $this->setGrantType(Config::get('amadeus', 'client_secret'));
+        $this->setSandbox(Config::get('amadeus', 'sandbox'));
+        $this->setTestLink(Config::get('amadeus', 'test_link'));
+        $this->setLiveLink(Config::get('amadeus', 'live_link'));
+        $this->setTimeout(Config::get('amadeus', 'timeout'));
+        $this->setReturnTransfer(Config::get('amadeus', 'RETURNTRANSFER'));
     }
 
-    public function greet()
+    public function setClientID($clientId)
     {
-        return 'Hi test ! How are you doing today?';
+        $this->clientID = $clientId;
     }
 
-    
-    public function url()
+    public function getClientID()
     {
-        if($this->sandbox) {
-            $this->base_url = $this->$test_link;
-        }
-
-        return $this->base_url;
+        return $this->clientID;
     }
 
-    public static function getAccessToken()
+    public function setClientSecret($clientSecret)
     {
-        self::createAccessToken();
+        $this->clientSecret = $clientSecret;
     }
 
-    public static function createAccessToken()
+    public function getClientSecret()
     {
-        $url = self::url() . "v1/security/oauth2/token";
-
-        try {
-            $client = new Client();
-            $result = $client->post($url, [
-                'form_params' => [ 
-                    'client_id' => $this->client_id,
-                    'client_secret' => $this->client_secret,
-                    'grant_type' =>  $this->grant_type,
-                ]
-            ]);
-
-            if ($result->getStatusCode()) {
-                $result = json_decode($result->getBody());
-
-                if(isset($result->access_token)){
-                    $this->token = $result->access_token;
-                    return true;
-                }
-            }
-
-        } catch (GuzzleException $e) {
-            return false;
-        }
-
-        return false;
+        return $this->clientSecret;
     }
+
+    public function setGrantType($grantType)
+    {
+        $this->grantType = $grantType;
+    }
+
+    public function getGrantType()
+    {
+        return $this->grantType;
+    }
+
+    public function setSandbox($sandbox)
+    {
+        $this->sandbox = $sandbox;
+    }
+
+    public function getSandbox()
+    {
+        return $this->sandbox;
+    }
+
+    public function setTestLink($testLink)
+    {
+        $this->testLink = $testLink;
+    }
+
+    public function getTestLink()
+    {
+        return $this->testLink;
+    }
+
+    public function setLiveLink($liveLink)
+    {
+        $this->liveLink = $liveLink;
+    }
+
+    public function getLiveLink()
+    {
+        return $this->liveLink;
+    }
+
+    public function setTimeout($timeout)
+    {
+        $this->timeout = $timeout;
+    }
+
+    public function getTimeout()
+    {
+        return $this->timeout;
+    }
+
+    public function setReturnTransfer($returnTransfer){
+        $this->returnTransfer = $returnTransfer;
+    }
+
+    public function getReturnTransfer()
+    {
+        return $this->returnTransfer;
+    }
+
 }
