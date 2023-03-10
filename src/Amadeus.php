@@ -117,4 +117,71 @@ class Amadeus {
         return $this->returnTransfer;
     }
 
+    public function url()
+    {
+        $baseUrl = $this->liveLink;
+        if ($this->returnTransfer) {
+            $baseUrl = $this->testLink;
+        }
+
+        return $baseUrl;
+    }
+
+    public function setToken($token)
+    {
+        $this->token = $token;
+    }
+
+    public function createAccessToken($token)
+    {
+        $url = self::url()."v1/security/oauth2/token";
+
+        try {
+            $client = new Client();
+
+            $result = $client->post($url, [
+                'form_params' => [
+                    'client_id' => $this->clientID,
+                    'client_secret' => $this->clientSecret, 
+                    'grant_type' =>  $this->grantType,
+                ]
+            ]);
+
+            if ($result->getStatusCode()) {
+                $result = json_decode($result->getBody());
+
+                if(isset($result->access_token)){
+                    self::setToken($result->access_token);
+                    return true;
+                }
+            } else {
+                return false;
+            }
+        } catch (GuzzleException $e) {
+            return false;
+        }
+    }
+
+    public function getAccessToken(){
+        if ($this->token == null) {
+            return self::createAccessToken();
+        } else {
+            $endPoint="v1/security/oauth2/token/".$this->token;
+            $result = Helpers::get($endPoint);
+
+            if ($result->state == 'expired') {
+                return self::createAccessToken();
+            }
+
+            if(isset($result->access_token)){
+                $this->token = $result->access_token;
+                return $result->access_token;
+            } else {
+                return self::createAccessToken();
+            }
+        }
+
+        return false;
+    }
+
 }
