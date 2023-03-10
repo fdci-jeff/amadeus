@@ -146,7 +146,7 @@ class Amadeus {
                     'grant_type' =>  $this->grantType,
                 ]
             ]);
-            dd($result);
+            return $result;
             if ($result->getStatusCode()) {
                 $result = json_decode($result->getBody());
 
