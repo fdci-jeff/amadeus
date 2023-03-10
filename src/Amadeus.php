@@ -132,7 +132,7 @@ class Amadeus {
         $this->token = $token;
     }
 
-    public function createAccessToken($token)
+    public function createAccessToken()
     {
         $url = self::url()."v1/security/oauth2/token";
 
