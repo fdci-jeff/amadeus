@@ -146,13 +146,12 @@ class Amadeus {
                     'grant_type' =>  $this->grantType,
                 ]
             ]);
-
+            dd($result);
             if ($result->getStatusCode()) {
                 $result = json_decode($result->getBody());
 
                 if(isset($result->access_token)){
-                    self::setToken($result->access_token);
-                    return true;
+                    return $result->access_token;
                 }
             } else {
                 return false;
@@ -161,27 +160,4 @@ class Amadeus {
             return false;
         }
     }
-
-    public function getAccessToken(){
-        if ($this->token == null) {
-            return self::createAccessToken();
-        } else {
-            $endPoint="v1/security/oauth2/token/".$this->token;
-            $result = Helpers::get($endPoint);
-
-            if ($result->state == 'expired') {
-                return self::createAccessToken();
-            }
-
-            if(isset($result->access_token)){
-                $this->token = $result->access_token;
-                return $result->access_token;
-            } else {
-                return self::createAccessToken();
-            }
-        }
-
-        return false;
-    }
-
 }
