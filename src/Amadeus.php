@@ -28,14 +28,14 @@ class Amadeus {
 
     public function __construct()
     {
-        $this->setClientID(Config::get('amadeus', 'client_id'));
-        $this->setClientSecret(Config::get('amadeus', 'client_secret'));
-        $this->setGrantType(Config::get('amadeus', 'client_secret'));
-        $this->setSandbox(Config::get('amadeus', 'sandbox'));
-        $this->setTestLink(Config::get('amadeus', 'test_link'));
-        $this->setLiveLink(Config::get('amadeus', 'live_link'));
-        $this->setTimeout(Config::get('amadeus', 'timeout'));
-        $this->setReturnTransfer(Config::get('amadeus', 'RETURNTRANSFER'));
+        $this->setClientID(config('amadeus.client_id'));
+        $this->setClientSecret(config('amadeus.client_secret'));
+        $this->setGrantType(config('amadeus.client_secret'));
+        $this->setSandbox(config('amadeus.sandbox'));
+        $this->setTestLink(config('amadeus.test_link'));
+        $this->setLiveLink(config('amadeus.live_link'));
+        $this->setTimeout(config('amadeus.timeout'));
+        $this->setReturnTransfer(config('amadeus.RETURNTRANSFER'));
     }
 
     public function setClientID($clientId)
